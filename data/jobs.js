@@ -20,7 +20,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -46,7 +46,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -72,7 +72,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -98,7 +98,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -124,7 +124,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -150,7 +150,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -176,9 +176,9 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": true,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
-    "linkState": "discovered",
-    "httpStatus": null,
+    "lastChecked": "2026-07-20T06:37:07.245Z",
+    "linkState": "verified",
+    "httpStatus": 200,
     "failureCount": 0
   },
   {
@@ -202,7 +202,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -228,7 +228,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -254,7 +254,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -280,7 +280,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -306,9 +306,9 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": true,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
-    "linkState": "discovered",
-    "httpStatus": null,
+    "lastChecked": "2026-07-20T06:37:07.245Z",
+    "linkState": "verified",
+    "httpStatus": 200,
     "failureCount": 0
   },
   {
@@ -332,9 +332,9 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": true,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
-    "linkState": "discovered",
-    "httpStatus": null,
+    "lastChecked": "2026-07-20T06:37:07.245Z",
+    "linkState": "verified",
+    "httpStatus": 200,
     "failureCount": 0
   },
   {
@@ -358,7 +358,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -384,7 +384,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -410,7 +410,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -436,7 +436,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -462,7 +462,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -488,10 +488,10 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
-    "linkState": "verified",
-    "httpStatus": 200,
-    "failureCount": 0
+    "lastChecked": "2026-07-20T06:37:07.245Z",
+    "linkState": "network-error",
+    "httpStatus": null,
+    "failureCount": 1
   },
   {
     "id": "100",
@@ -514,7 +514,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -540,7 +540,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -566,7 +566,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -592,7 +592,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -618,7 +618,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -644,7 +644,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -670,7 +670,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -696,7 +696,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -722,7 +722,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -748,7 +748,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -774,10 +774,10 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
-    "linkState": "verified",
-    "httpStatus": 200,
-    "failureCount": 0
+    "lastChecked": "2026-07-20T06:37:07.245Z",
+    "linkState": "network-error",
+    "httpStatus": null,
+    "failureCount": 1
   },
   {
     "id": "103",
@@ -800,7 +800,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -826,7 +826,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -852,7 +852,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -878,7 +878,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -904,7 +904,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -930,7 +930,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -956,7 +956,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -982,7 +982,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1008,7 +1008,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1034,7 +1034,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1060,7 +1060,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1086,7 +1086,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1112,7 +1112,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1138,7 +1138,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1164,7 +1164,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "robots-blocked",
     "httpStatus": null,
     "failureCount": 0
@@ -1190,9 +1190,9 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
-    "linkState": "protected",
-    "httpStatus": 403,
+    "lastChecked": "2026-07-20T06:37:07.245Z",
+    "linkState": "verified",
+    "httpStatus": 200,
     "failureCount": 0
   },
   {
@@ -1216,7 +1216,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1242,7 +1242,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1268,7 +1268,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "protected",
     "httpStatus": 403,
     "failureCount": 0
@@ -1294,7 +1294,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1320,7 +1320,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1346,7 +1346,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1372,7 +1372,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1398,7 +1398,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1424,7 +1424,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1450,7 +1450,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1476,7 +1476,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "robots-blocked",
     "httpStatus": null,
     "failureCount": 0
@@ -1502,7 +1502,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1528,7 +1528,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1554,7 +1554,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1580,7 +1580,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1606,7 +1606,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1632,7 +1632,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1658,7 +1658,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1684,7 +1684,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1710,10 +1710,10 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
-    "linkState": "network-error",
-    "httpStatus": null,
-    "failureCount": 1
+    "lastChecked": "2026-07-20T06:37:07.245Z",
+    "linkState": "verified",
+    "httpStatus": 200,
+    "failureCount": 0
   },
   {
     "id": "133",
@@ -1736,7 +1736,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1762,7 +1762,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1788,7 +1788,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "protected",
     "httpStatus": 403,
     "failureCount": 0
@@ -1814,10 +1814,10 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
-    "linkState": "verified",
-    "httpStatus": 200,
-    "failureCount": 0
+    "lastChecked": "2026-07-20T06:37:07.245Z",
+    "linkState": "network-error",
+    "httpStatus": null,
+    "failureCount": 1
   },
   {
     "id": "159",
@@ -1840,7 +1840,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1866,7 +1866,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "protected",
     "httpStatus": 403,
     "failureCount": 0
@@ -1892,7 +1892,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1918,7 +1918,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1944,7 +1944,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1970,7 +1970,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -1996,7 +1996,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2022,7 +2022,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2048,7 +2048,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2074,7 +2074,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2100,10 +2100,10 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
-    "linkState": "verified",
-    "httpStatus": 200,
-    "failureCount": 0
+    "lastChecked": "2026-07-20T06:37:07.245Z",
+    "linkState": "network-error",
+    "httpStatus": null,
+    "failureCount": 1
   },
   {
     "id": "169",
@@ -2126,7 +2126,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2152,7 +2152,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2178,7 +2178,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "protected",
     "httpStatus": 403,
     "failureCount": 0
@@ -2204,7 +2204,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2230,7 +2230,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2256,7 +2256,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "protected",
     "httpStatus": 403,
     "failureCount": 0
@@ -2282,7 +2282,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2308,7 +2308,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2334,7 +2334,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2360,7 +2360,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2386,7 +2386,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2412,7 +2412,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2438,7 +2438,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2464,7 +2464,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2490,7 +2490,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2516,10 +2516,10 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
-    "linkState": "verified",
-    "httpStatus": 200,
-    "failureCount": 0
+    "lastChecked": "2026-07-20T06:37:07.245Z",
+    "linkState": "network-error",
+    "httpStatus": null,
+    "failureCount": 1
   },
   {
     "id": "123",
@@ -2542,7 +2542,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2568,7 +2568,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2594,7 +2594,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2620,10 +2620,10 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
-    "linkState": "verified",
-    "httpStatus": 200,
-    "failureCount": 0
+    "lastChecked": "2026-07-20T06:37:07.245Z",
+    "linkState": "network-error",
+    "httpStatus": null,
+    "failureCount": 1
   },
   {
     "id": "86",
@@ -2646,10 +2646,10 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
-    "linkState": "verified",
-    "httpStatus": 200,
-    "failureCount": 0
+    "lastChecked": "2026-07-20T06:37:07.245Z",
+    "linkState": "network-error",
+    "httpStatus": null,
+    "failureCount": 1
   },
   {
     "id": "62",
@@ -2672,7 +2672,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2698,7 +2698,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2724,7 +2724,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2750,7 +2750,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2776,7 +2776,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2802,7 +2802,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2828,7 +2828,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2854,7 +2854,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2880,7 +2880,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2906,7 +2906,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2932,7 +2932,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2958,7 +2958,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -2984,7 +2984,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3010,7 +3010,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3036,7 +3036,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3062,7 +3062,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3088,7 +3088,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3114,7 +3114,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3140,7 +3140,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3166,7 +3166,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3192,7 +3192,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3218,7 +3218,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3244,7 +3244,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3270,7 +3270,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3296,7 +3296,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3322,7 +3322,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3348,7 +3348,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3374,7 +3374,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3400,7 +3400,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3426,7 +3426,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3452,7 +3452,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3478,7 +3478,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3504,7 +3504,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3530,7 +3530,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3556,7 +3556,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3582,7 +3582,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3608,7 +3608,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3634,7 +3634,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3660,7 +3660,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3686,7 +3686,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3712,7 +3712,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3738,7 +3738,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3764,7 +3764,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3790,7 +3790,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3816,7 +3816,7 @@ window.APPLYPILOT_JOBS = [
     "active": true,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "verified",
     "httpStatus": 200,
     "failureCount": 0
@@ -3842,9 +3842,9 @@ window.APPLYPILOT_JOBS = [
     "active": false,
     "discovered": false,
     "firstSeen": "2026-07-20",
-    "lastChecked": "2026-07-20T05:52:55.647Z",
+    "lastChecked": "2026-07-20T06:37:07.245Z",
     "linkState": "closed",
     "httpStatus": 404,
-    "failureCount": 1
+    "failureCount": 2
   }
 ];
