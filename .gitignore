@@ -1,0 +1,12 @@
+.DS_Store
+node_modules/
+*.log
+.env
+.env.*
+private/
+resumes/
+candidate_profile.json
+application_log.csv
+cookies*.json
+session*.json
+_site/

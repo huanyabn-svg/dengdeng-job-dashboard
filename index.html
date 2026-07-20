@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="每天自动更新的公开招聘信息看板，聚合企业官网与 Bonjour 上海/远程岗位。">
+  <title>邓邓的自动招聘看板</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f5f2;
+      --panel: #ffffff;
+      --text: #171717;
+      --muted: #686868;
+      --border: #deded8;
+      --primary: #171717;
+      --primary-text: #ffffff;
+      --soft: #efefe9;
+      --mint: #dff7ea;
+      --blue: #e4f0ff;
+      --amber: #fff0c7;
+      --violet: #eee7ff;
+      --pink: #ffe4ef;
+      --ring: #4d7cff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #181818;
+        --panel: #222222;
+        --text: #f1f1ef;
+        --muted: #b2b2ad;
+        --border: #3b3b38;
+        --primary: #f1f1ef;
+        --primary-text: #181818;
+        --soft: #2d2d2a;
+        --mint: #183b2a;
+        --blue: #1d3149;
+        --amber: #453718;
+        --violet: #30254d;
+        --pink: #492536;
+        --ring: #88a6ff;
+      }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    button, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+    .app { width: min(1440px, 100%); margin: 0 auto; padding: 20px; }
+    .topbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; margin-bottom: 16px; }
+    .brand { display: flex; gap: 10px; align-items: center; min-width: 0; }
+    .mark { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: var(--primary); color: var(--primary-text); font-weight: 700; }
+    .brand strong, .brand span { display: block; }
+    .brand span, .muted { color: var(--muted); }
+    .metrics { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .badge, .tag { display: inline-flex; align-items: center; border-radius: 999px; background: var(--soft); padding: 3px 9px; white-space: nowrap; }
+    .badge.live::before { content: ""; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: #35a66f; }
+    .layout { display: grid; grid-template-columns: 170px minmax(0, 1fr) 290px; gap: 14px; align-items: start; }
+    .panel, .job { border: 1px solid var(--border); border-radius: 16px; background: var(--panel); }
+    .sidebar, .detail { position: sticky; top: 14px; padding: 14px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h2, h3 { margin-bottom: 8px; font-weight: 650; }
+    .filter-group + .filter-group { margin-top: 16px; }
+    .filter-label { display: block; color: var(--muted); margin-bottom: 6px; }
+    .filter-stack { display: grid; gap: 5px; }
+    .btn { display: inline-flex; justify-content: center; align-items: center; min-height: 36px; padding: 7px 11px; border: 1px solid var(--border); border-radius: 10px; background: transparent; color: var(--text); text-decoration: none; cursor: pointer; }
+    .btn:disabled { cursor: wait; opacity: .65; }
+    .filter-stack .btn { justify-content: flex-start; width: 100%; }
+    .btn[aria-pressed="true"], .btn.primary { background: var(--primary); color: var(--primary-text); border-color: var(--primary); }
+    .btn:focus-visible, input:focus-visible, .job:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+    .reset { width: 100%; margin-top: 16px; }
+    .main { min-width: 0; }
+    .search-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: end; margin-bottom: 10px; }
+    label { color: var(--muted); }
+    input { display: block; width: 100%; min-height: 40px; margin-top: 5px; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); color: var(--text); padding: 8px 11px; }
+    .count { color: var(--muted); padding-bottom: 9px; white-space: nowrap; }
+    .active-filters { display: flex; flex-wrap: wrap; gap: 6px; min-height: 30px; margin-bottom: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .job { display: grid; gap: 8px; padding: 13px; cursor: pointer; text-align: left; color: var(--text); }
+    .job[data-tone="mint"] { background: linear-gradient(135deg, var(--mint), var(--panel)); }
+    .job[data-tone="blue"] { background: linear-gradient(135deg, var(--blue), var(--panel)); }
+    .job[data-tone="amber"] { background: linear-gradient(135deg, var(--amber), var(--panel)); }
+    .job[data-tone="violet"] { background: linear-gradient(135deg, var(--violet), var(--panel)); }
+    .job[data-tone="pink"] { background: linear-gradient(135deg, var(--pink), var(--panel)); }
+    .job.selected { outline: 2px solid var(--ring); outline-offset: 1px; }
+    .job-head, .job-foot { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
+    .job h3 { margin: 2px 0 0; overflow-wrap: anywhere; }
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .tag { font-size: 12px; }
+    .job-foot { align-items: center; color: var(--muted); }
+    .actions { display: flex; gap: 6px; }
+    .detail-company { color: var(--muted); margin-bottom: 10px; }
+    .detail-list { display: grid; gap: 12px; margin: 16px 0; }
+    .detail-list span { display: block; color: var(--muted); font-size: 12px; margin-bottom: 3px; }
+    .detail-actions { display: grid; gap: 7px; }
+    .empty { grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 34px 0; }
+    footer { color: var(--muted); text-align: center; padding: 18px 0 4px; }
+    @media (max-width: 1000px) {
+      .layout { grid-template-columns: 160px minmax(0, 1fr); }
+      .detail { position: static; grid-column: 1 / -1; }
+    }
+    @media (max-width: 680px) {
+      .app { padding: 12px; }
+      .topbar, .layout, .search-row { grid-template-columns: 1fr; }
+      .metrics { justify-content: flex-start; }
+      .sidebar { position: static; }
+      .filter-stack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid { grid-template-columns: 1fr; }
+      .count { padding-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">AP</div>
+        <div><strong>邓邓的自动招聘看板</strong><span>每日搜索 · 链接校验 · 上海 / 远程 Bonjour · 企业官网</span></div>
+      </div>
+      <div class="metrics" aria-label="数据摘要">
+        <span class="badge" id="totalMetric">0 条岗位</span>
+        <span class="badge" id="bonjourMetric">0 条 Bonjour</span>
+        <span class="badge" id="officialMetric">0 个官网入口</span>
+        <span class="badge live" id="refreshMetric">等待刷新</span>
+        <button class="btn primary" id="refreshButton" type="button">刷新最新数据</button>
+        <a class="btn" id="runSearchLink" href="#" target="_blank" rel="noopener noreferrer" hidden>运行岗位搜索</a>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="panel sidebar" aria-label="岗位筛选">
+        <h2>筛选条件</h2>
+        <div class="filter-group">
+          <span class="filter-label">地点</span>
+          <div class="filter-stack">
+            <button class="btn" data-filter="location" data-value="all" aria-pressed="true">全部地点</button>
+            <button class="btn" data-filter="location" data-value="base" aria-pressed="false">目标城市</button>
+            <button class="btn" data-filter="location" data-value="overseas" aria-pressed="false">海外 / 远程</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">方向</span>
+          <div class="filter-stack">
+            <button class="btn" data-filter="role" data-value="all" aria-pressed="true">全部方向</button>
+            <button class="btn" data-filter="role" data-value="operations" aria-pressed="false">运营 / 内容</button>
+            <button class="btn" data-filter="role" data-value="sales" aria-pressed="false">销售 / BD</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">进度</span>
+          <div class="filter-stack">
+            <button class="btn" data-filter="status" data-value="bonjour" aria-pressed="true">Bonjour 在招</button>
+            <button class="btn" data-filter="status" data-value="watch" aria-pressed="false">官网岗位搜索</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">企业性质</span>
+          <div class="filter-stack">
+            <button class="btn" data-filter="ownership" data-value="all" aria-pressed="true">全部性质</button>
+            <button class="btn" data-filter="ownership" data-value="private" aria-pressed="false">民营企业</button>
+            <button class="btn" data-filter="ownership" data-value="foreign" aria-pressed="false">外资 / 跨国</button>
+            <button class="btn" data-filter="ownership" data-value="state" aria-pressed="false">国企 / 央企</button>
+            <button class="btn" data-filter="ownership" data-value="startup" aria-pressed="false">AI 初创 / 成长</button>
+          </div>
+        </div>
+        <button class="btn reset" id="resetButton">恢复默认</button>
+      </aside>
+
+      <main class="main">
+        <div class="search-row">
+          <label>搜索公司或岗位
+            <input id="searchInput" type="search" placeholder="例如：上海、海外增长、销售">
+          </label>
+          <span class="count" id="resultCount">0 条招聘信息</span>
+        </div>
+        <div class="active-filters" id="activeFilters" aria-live="polite"></div>
+        <section class="grid" id="jobGrid" aria-label="岗位列表"></section>
+      </main>
+
+      <aside class="panel detail" aria-live="polite">
+        <span class="badge" id="detailStatus">请选择岗位</span>
+        <h2 id="detailTitle">岗位详情</h2>
+        <div class="detail-company" id="detailCompany"></div>
+        <div class="tags" id="detailTags"></div>
+        <div class="detail-list">
+          <div><span>匹配判断</span><div id="detailReason">选择左侧岗位后查看。</div></div>
+          <div><span>下一步</span><div id="detailNext">—</div></div>
+          <div><span>入口说明</span><div id="detailLinkType">—</div></div>
+          <div><span>链接状态</span><div id="detailLinkState">—</div></div>
+        </div>
+        <div class="detail-actions">
+          <a class="btn primary" id="applyLink" href="#" target="_blank" rel="noopener noreferrer">打开招聘入口</a>
+          <button class="btn" id="copyLink">复制岗位链接</button>
+        </div>
+      </aside>
+    </div>
+    <footer id="runMessage">公开看板不包含姓名、电话、邮箱、简历或申请记录。</footer>
+  </div>
+
+  <script src="./data/jobs.js"></script>
+  <script src="./data/run-status.js"></script>
+  <script>
+    (() => {
+      let jobs = (window.APPLYPILOT_JOBS || []).filter(job => job.active !== false);
+      let run = window.APPLYPILOT_RUN_STATUS || {};
+      const labels = {
+        all: '全部', base: '目标城市', overseas: '海外 / 远程',
+        operations: '运营 / 内容', sales: '销售 / BD',
+        bonjour: 'Bonjour 在招', watch: '官网岗位搜索',
+        private: '民营企业', foreign: '外资 / 跨国', state: '国企 / 央企', startup: 'AI 初创 / 成长公司'
+      };
+      const tones = ['mint', 'blue', 'amber', 'violet', 'pink'];
+      const state = { location: 'all', role: 'all', status: 'bonjour', ownership: 'all', query: '', selected: null };
+      const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
+      const grid = document.getElementById('jobGrid');
+      const count = document.getElementById('resultCount');
+      const activeFilters = document.getElementById('activeFilters');
+      const search = document.getElementById('searchInput');
+      const refreshButton = document.getElementById('refreshButton');
+      const runSearchLink = document.getElementById('runSearchLink');
+
+      function updateMetrics() {
+        document.getElementById('totalMetric').textContent = `${jobs.length} 条有效信息`;
+        document.getElementById('bonjourMetric').textContent = `${jobs.filter(j => j.status === 'bonjour').length} 条 Bonjour`;
+        document.getElementById('officialMetric').textContent = `${jobs.filter(j => j.status === 'watch').length} 个官网入口`;
+        const refreshed = run.lastRun ? new Date(run.lastRun) : null;
+        document.getElementById('refreshMetric').textContent = refreshed && !Number.isNaN(refreshed.getTime())
+          ? `更新 ${refreshed.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}`
+          : '等待自动刷新';
+        if (run.message) document.getElementById('runMessage').textContent = `${run.message} · 公开看板不包含个人资料。`;
+      }
+
+      function configureWorkflowLink() {
+        if (!location.hostname.endsWith('.github.io')) return;
+        const owner = location.hostname.slice(0, -'.github.io'.length);
+        const repository = location.pathname.split('/').filter(Boolean)[0] || `${owner}.github.io`;
+        runSearchLink.href = `https://github.com/${encodeURIComponent(owner)}/${encodeURIComponent(repository)}/actions/workflows/daily-refresh.yml`;
+        runSearchLink.hidden = false;
+      }
+
+      function loadScript(source) {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = source;
+          script.onload = () => { script.remove(); resolve(); };
+          script.onerror = () => { script.remove(); reject(new Error(`无法加载 ${source}`)); };
+          document.head.appendChild(script);
+        });
+      }
+
+      async function refreshLatestData() {
+        if (location.protocol === 'file:') {
+          location.reload();
+          return;
+        }
+        refreshButton.disabled = true;
+        refreshButton.textContent = '刷新中…';
+        try {
+          const stamp = Date.now();
+          await loadScript(`./data/jobs.js?v=${stamp}`);
+          await loadScript(`./data/run-status.js?v=${stamp}`);
+          jobs = (window.APPLYPILOT_JOBS || []).filter(job => job.active !== false);
+          run = window.APPLYPILOT_RUN_STATUS || {};
+          updateMetrics();
+          render();
+          refreshButton.textContent = '已更新';
+        } catch (error) {
+          refreshButton.textContent = '刷新失败';
+          document.getElementById('runMessage').textContent = `刷新失败：${error.message}`;
+        } finally {
+          setTimeout(() => { refreshButton.disabled = false; refreshButton.textContent = '刷新最新数据'; }, 1500);
+        }
+      }
+
+      function visibleJobs() {
+        const q = state.query.trim().toLowerCase();
+        return jobs.filter(job =>
+          job.status === state.status &&
+          (state.location === 'all' || job.zone === state.location) &&
+          (state.role === 'all' || job.role === state.role) &&
+          (state.ownership === 'all' || job.ownership === state.ownership) &&
+          (!q || `${job.company} ${job.title} ${job.family} ${job.location} ${labels[job.ownership] || ''}`.toLowerCase().includes(q))
+        );
+      }
+
+      function selectJob(id) {
+        const job = jobs.find(item => item.id === id);
+        if (!job) return;
+        state.selected = id;
+        document.querySelectorAll('.job').forEach(card => card.classList.toggle('selected', card.dataset.id === id));
+        document.getElementById('detailStatus').textContent = job.statusLabel;
+        document.getElementById('detailTitle').textContent = job.title;
+        document.getElementById('detailCompany').textContent = `${job.company} · ${job.location}`;
+        document.getElementById('detailTags').innerHTML = `<span class="tag">${escapeHtml(job.family)}</span><span class="tag">${escapeHtml(labels[job.ownership] || job.ownership)}</span><span class="tag">优先级 ${escapeHtml(job.priority)}</span>`;
+        document.getElementById('detailReason').textContent = job.reason || '符合当前岗位方向和地点筛选。';
+        document.getElementById('detailNext').textContent = job.next || '打开入口并核验岗位要求。';
+        document.getElementById('detailLinkType').textContent = job.linkType || '公开招聘入口';
+        const checked = job.lastChecked ? new Date(job.lastChecked).toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' }) : '未记录';
+        document.getElementById('detailLinkState').textContent = `${job.linkState || 'unknown'} · 检测 ${checked}`;
+        const link = document.getElementById('applyLink');
+        link.href = job.sourceUrl;
+        link.textContent = job.applyLabel || '打开招聘入口';
+      }
+
+      function render() {
+        const visible = visibleJobs();
+        count.textContent = `${visible.length} 条招聘信息`;
+        activeFilters.innerHTML = [state.location, state.role, state.status, state.ownership]
+          .filter(value => value !== 'all')
+          .map(value => `<span class="badge">${escapeHtml(labels[value])}</span>`).join('');
+        grid.innerHTML = visible.length ? visible.map((job, index) => `
+          <article class="job${job.id === state.selected ? ' selected' : ''}" data-id="${escapeHtml(job.id)}" data-tone="${tones[index % tones.length]}">
+            <div class="job-head">
+              <div><div class="muted">${escapeHtml(job.location)} · ${job.lastChecked ? new Date(job.lastChecked).toLocaleDateString('zh-CN') : ''}</div><h3>${escapeHtml(job.company)}</h3></div>
+              <span class="badge">${escapeHtml(job.statusLabel)}</span>
+            </div>
+            <div>${escapeHtml(job.title)}</div>
+            <div class="tags"><span class="tag">${escapeHtml(job.family)}</span><span class="tag">${escapeHtml(labels[job.ownership] || job.ownership)}</span><span class="tag">${job.discovered ? '自动发现' : '已收录'}</span></div>
+            <div class="job-foot"><span>优先级 ${escapeHtml(job.priority)}</span><div class="actions"><button class="btn" data-detail="${escapeHtml(job.id)}">详情</button><a class="btn" href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener noreferrer">打开</a></div></div>
+          </article>`).join('') : '<div class="empty">没有符合当前筛选的岗位</div>';
+        grid.querySelectorAll('.job').forEach(card => card.addEventListener('click', () => selectJob(card.dataset.id)));
+        grid.querySelectorAll('[data-detail]').forEach(button => button.addEventListener('click', event => { event.stopPropagation(); selectJob(button.dataset.detail); }));
+        grid.querySelectorAll('a').forEach(link => link.addEventListener('click', event => event.stopPropagation()));
+        if (!visible.some(job => job.id === state.selected) && visible[0]) selectJob(visible[0].id);
+      }
+
+      document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
+        const key = button.dataset.filter;
+        state[key] = button.dataset.value;
+        document.querySelectorAll(`[data-filter="${key}"]`).forEach(peer => peer.setAttribute('aria-pressed', String(peer === button)));
+        render();
+      }));
+      search.addEventListener('input', () => { state.query = search.value; render(); });
+      document.getElementById('resetButton').addEventListener('click', () => {
+        Object.assign(state, { location: 'all', role: 'all', status: 'bonjour', ownership: 'all', query: '' });
+        search.value = '';
+        document.querySelectorAll('[data-filter]').forEach(button => {
+          const pressed = (button.dataset.filter === 'status' && button.dataset.value === 'bonjour') || (button.dataset.filter !== 'status' && button.dataset.value === 'all');
+          button.setAttribute('aria-pressed', String(pressed));
+        });
+        render();
+      });
+      document.getElementById('copyLink').addEventListener('click', async event => {
+        const job = jobs.find(item => item.id === state.selected);
+        if (!job) return;
+        try { await navigator.clipboard.writeText(job.sourceUrl); event.currentTarget.textContent = '已复制'; }
+        catch (_) { window.prompt('复制岗位链接：', job.sourceUrl); }
+        setTimeout(() => { event.currentTarget.textContent = '复制岗位链接'; }, 1500);
+      });
+      refreshButton.addEventListener('click', refreshLatestData);
+      configureWorkflowLink();
+      updateMetrics();
+      render();
+    })();
+  </script>
+</body>
+</html>

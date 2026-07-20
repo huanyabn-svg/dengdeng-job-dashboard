@@ -1,0 +1,16 @@
+{
+  "name": "applypilot-auto-job-board",
+  "version": "1.0.0",
+  "private": false,
+  "type": "module",
+  "description": "Privacy-safe, automatically refreshed job discovery dashboard.",
+  "scripts": {
+    "refresh": "node scripts/refresh.mjs",
+    "serve": "node scripts/serve.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}
