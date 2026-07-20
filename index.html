@@ -93,6 +93,13 @@
     .detail-list { display: grid; gap: 12px; margin: 16px 0; }
     .detail-list span { display: block; color: var(--muted); font-size: 12px; margin-bottom: 3px; }
     .detail-actions { display: grid; gap: 7px; }
+    .queue-section { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .queue-heading { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+    .queue-list { display: grid; gap: 7px; margin: 10px 0; }
+    .queue-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+    .queue-item strong, .queue-item span { display: block; overflow-wrap: anywhere; }
+    .queue-item span { color: var(--muted); font-size: 12px; }
+    .queue-empty { color: var(--muted); padding: 6px 0; }
     .empty { grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 34px 0; }
     footer { color: var(--muted); text-align: center; padding: 18px 0 4px; }
     @media (max-width: 1000px) {
@@ -121,6 +128,7 @@
         <span class="badge" id="totalMetric">0 条岗位</span>
         <span class="badge" id="bonjourMetric">0 条 Bonjour</span>
         <span class="badge" id="officialMetric">0 个官网入口</span>
+        <span class="badge" id="queueMetric">投递队列 0</span>
         <span class="badge live" id="refreshMetric">等待刷新</span>
         <button class="btn primary" id="refreshButton" type="button">刷新最新数据</button>
         <a class="btn" id="runSearchLink" href="#" target="_blank" rel="noopener noreferrer" hidden>运行岗位搜索</a>
@@ -190,8 +198,15 @@
         </div>
         <div class="detail-actions">
           <a class="btn primary" id="applyLink" href="#" target="_blank" rel="noopener noreferrer">打开招聘入口</a>
+          <button class="btn" id="queueButton" type="button" aria-pressed="false">加入私有投递队列</button>
           <button class="btn" id="copyLink">复制岗位链接</button>
         </div>
+        <section class="queue-section" aria-label="私有投递队列">
+          <div class="queue-heading"><h3>私有投递队列</h3><span class="badge" id="queueCount">0 条</span></div>
+          <div class="muted">仅保存在当前浏览器，不上传个人资料。</div>
+          <div class="queue-list" id="queueList" aria-live="polite"></div>
+          <button class="btn" id="clearQueue" type="button" hidden>清空队列</button>
+        </section>
       </aside>
     </div>
     <footer id="runMessage">公开看板不包含姓名、电话、邮箱、简历或申请记录。</footer>
@@ -218,6 +233,47 @@
       const search = document.getElementById('searchInput');
       const refreshButton = document.getElementById('refreshButton');
       const runSearchLink = document.getElementById('runSearchLink');
+      const queueButton = document.getElementById('queueButton');
+      const queueList = document.getElementById('queueList');
+      const clearQueue = document.getElementById('clearQueue');
+      const queueStorageKey = 'dengdeng-private-application-queue-v1';
+      let queue = [];
+
+      try {
+        const storedQueue = JSON.parse(localStorage.getItem(queueStorageKey) || '[]');
+        if (Array.isArray(storedQueue)) queue = storedQueue.filter(item => item && item.id && item.sourceUrl);
+      } catch (_) {
+        queue = [];
+      }
+
+      function saveQueue() {
+        try { localStorage.setItem(queueStorageKey, JSON.stringify(queue)); }
+        catch (_) { /* 浏览器禁用本地存储时，本次会话仍可使用队列。 */ }
+      }
+
+      function renderQueue() {
+        document.getElementById('queueMetric').textContent = `投递队列 ${queue.length}`;
+        document.getElementById('queueCount').textContent = `${queue.length} 条`;
+        clearQueue.hidden = queue.length === 0;
+        queueList.innerHTML = queue.length ? queue.map(item => `
+          <div class="queue-item">
+            <div><strong>${escapeHtml(item.company)}</strong><span>${escapeHtml(item.title)} · ${escapeHtml(item.resumeVariant)}</span></div>
+            <button class="btn" type="button" data-queue-remove="${escapeHtml(item.id)}">移除</button>
+          </div>`).join('') : '<div class="queue-empty">尚未加入岗位</div>';
+        queueList.querySelectorAll('[data-queue-remove]').forEach(button => button.addEventListener('click', () => {
+          queue = queue.filter(item => item.id !== button.dataset.queueRemove);
+          saveQueue();
+          renderQueue();
+          updateQueueButton();
+        }));
+      }
+
+      function updateQueueButton() {
+        const queued = Boolean(state.selected && queue.some(item => item.id === state.selected));
+        queueButton.setAttribute('aria-pressed', String(queued));
+        queueButton.textContent = queued ? '已加入投递队列' : '加入私有投递队列';
+        queueButton.disabled = !state.selected;
+      }
 
       function updateMetrics() {
         document.getElementById('totalMetric').textContent = `${jobs.length} 条有效信息`;
@@ -300,6 +356,7 @@
         const link = document.getElementById('applyLink');
         link.href = job.sourceUrl;
         link.textContent = job.applyLabel || '打开招聘入口';
+        updateQueueButton();
       }
 
       function render() {
@@ -347,9 +404,36 @@
         catch (_) { window.prompt('复制岗位链接：', job.sourceUrl); }
         setTimeout(() => { event.currentTarget.textContent = '复制岗位链接'; }, 1500);
       });
+      queueButton.addEventListener('click', () => {
+        const job = jobs.find(item => item.id === state.selected);
+        if (!job) return;
+        if (queue.some(item => item.id === job.id)) {
+          queue = queue.filter(item => item.id !== job.id);
+        } else {
+          queue.push({
+            id: job.id,
+            company: job.company,
+            title: job.title,
+            location: job.location,
+            sourceUrl: job.sourceUrl,
+            resumeVariant: job.role === 'sales' ? '销售 / BD / GTM版' : '内容 / 运营 / 营销版',
+            addedAt: new Date().toISOString()
+          });
+        }
+        saveQueue();
+        renderQueue();
+        updateQueueButton();
+      });
+      clearQueue.addEventListener('click', () => {
+        queue = [];
+        saveQueue();
+        renderQueue();
+        updateQueueButton();
+      });
       refreshButton.addEventListener('click', refreshLatestData);
       configureWorkflowLink();
       updateMetrics();
+      renderQueue();
       render();
     })();
   </script>
