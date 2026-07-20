@@ -1,0 +1,18 @@
+{
+  "timezone": "Asia/Shanghai",
+  "domesticPriority": ["上海", "青岛", "宁波"],
+  "bonjourAllowedLocationKeywords": ["上海", "远程", "remote"],
+  "roleKeywords": {
+    "operations": ["运营", "内容", "市场", "营销", "增长", "品牌", "社媒", "社区", "用户", "product marketing", "marketing", "growth", "content", "community", "operations"],
+    "sales": ["销售", "商务", "客户", "渠道", "业务拓展", "解决方案", "sales", "business development", "account", "partnership", "commercial", "gtm"]
+  },
+  "entryLevelKeywords": ["2027", "2026", "校招", "应届", "毕业生", "实习", "管培", "graduate", "intern", "trainee", "entry level", "junior"],
+  "overseasKeywords": ["remote", "singapore", "japan", "korea", "tokyo", "seoul", "hong kong", "malaysia", "thailand", "vietnam", "indonesia", "australia", "new zealand", "united kingdom", "germany", "france", "netherlands", "sweden", "denmark", "norway", "finland", "canada", "united states"],
+  "blockedDomains": ["linkedin.com"],
+  "requestTimeoutMs": 15000,
+  "maxConcurrentRequests": 4,
+  "maxDiscoveredPerSource": 12,
+  "retireAfterFailures": 3,
+  "bonjourListUrl": "https://bonjour.bio/jobs-mapping/jobs",
+  "atsBoards": []
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "type": "greenhouse",
+    "company": "Example Company",
+    "token": "company-board-token",
+    "ownership": "foreign",
+    "enabled": false
+  },
+  {
+    "type": "lever",
+    "company": "Example Company",
+    "token": "company-site-token",
+    "ownership": "startup",
+    "enabled": false
+  },
+  {
+    "type": "ashby",
+    "company": "Example Company",
+    "token": "company-job-board-name",
+    "ownership": "startup",
+    "enabled": false
+  }
+]
