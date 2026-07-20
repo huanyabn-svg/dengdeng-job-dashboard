@@ -205,7 +205,10 @@
           <div class="queue-heading"><h3>私有投递队列</h3><span class="badge" id="queueCount">0 条</span></div>
           <div class="muted">仅保存在当前浏览器，不上传个人资料。</div>
           <div class="queue-list" id="queueList" aria-live="polite"></div>
-          <button class="btn" id="clearQueue" type="button" hidden>清空队列</button>
+          <div class="detail-actions">
+            <button class="btn primary" id="exportQueue" type="button" hidden>导出给私有投递助手</button>
+            <button class="btn" id="clearQueue" type="button" hidden>清空队列</button>
+          </div>
         </section>
       </aside>
     </div>
@@ -236,6 +239,7 @@
       const queueButton = document.getElementById('queueButton');
       const queueList = document.getElementById('queueList');
       const clearQueue = document.getElementById('clearQueue');
+      const exportQueue = document.getElementById('exportQueue');
       const queueStorageKey = 'dengdeng-private-application-queue-v1';
       let queue = [];
 
@@ -255,6 +259,7 @@
         document.getElementById('queueMetric').textContent = `投递队列 ${queue.length}`;
         document.getElementById('queueCount').textContent = `${queue.length} 条`;
         clearQueue.hidden = queue.length === 0;
+        exportQueue.hidden = queue.length === 0;
         queueList.innerHTML = queue.length ? queue.map(item => `
           <div class="queue-item">
             <div><strong>${escapeHtml(item.company)}</strong><span>${escapeHtml(item.title)} · ${escapeHtml(item.resumeVariant)}</span></div>
@@ -429,6 +434,27 @@
         saveQueue();
         renderQueue();
         updateQueueButton();
+      });
+      exportQueue.addEventListener('click', () => {
+        if (!queue.length) return;
+        const payload = {
+          format: 'dengdeng-applypilot-queue',
+          version: 1,
+          exportedAt: new Date().toISOString(),
+          privacy: '岗位信息，不含姓名、电话、邮箱或简历文件',
+          jobs: queue
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `dengdeng-application-queue-${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        exportQueue.textContent = '队列已导出';
+        setTimeout(() => { exportQueue.textContent = '导出给私有投递助手'; }, 1800);
       });
       refreshButton.addEventListener('click', refreshLatestData);
       configureWorkflowLink();
