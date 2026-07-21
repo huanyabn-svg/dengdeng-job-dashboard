@@ -6,6 +6,7 @@
   "description": "Privacy-safe, automatically refreshed job discovery dashboard.",
   "scripts": {
     "refresh": "node scripts/refresh.mjs",
+    "migrate:trust": "node scripts/migrate-trust-model.mjs",
     "serve": "node scripts/serve.mjs",
     "check": "node scripts/check.mjs"
   },

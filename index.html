@@ -94,6 +94,13 @@
     .detail-list span { display: block; color: var(--muted); font-size: 12px; margin-bottom: 3px; }
     .detail-actions { display: grid; gap: 7px; }
     .queue-section { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .advisor { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .advisor input[type="file"] { padding: 7px; }
+    .advisor-status { color: var(--muted); margin: 8px 0; font-size: 12px; }
+    .advice-list { display: grid; gap: 7px; margin-top: 10px; }
+    .advice-item { border: 1px solid var(--border); border-radius: 10px; padding: 9px; background: var(--soft); }
+    .advice-item strong, .advice-item span { display: block; }
+    .advice-item span { color: var(--muted); font-size: 12px; margin-top: 2px; }
     .queue-heading { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
     .queue-list { display: grid; gap: 7px; margin: 10px 0; }
     .queue-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; }
@@ -130,8 +137,9 @@
         <span class="badge" id="officialMetric">0 个官网入口</span>
         <span class="badge" id="queueMetric">投递队列 0</span>
         <span class="badge live" id="refreshMetric">等待刷新</span>
-        <button class="btn primary" id="refreshButton" type="button">刷新最新数据</button>
-        <a class="btn" id="runSearchLink" href="#" target="_blank" rel="noopener noreferrer" hidden>运行岗位搜索</a>
+        <button class="btn primary" id="refreshButton" type="button">立即搜索最新岗位</button>
+        <button class="btn" id="syncButton" type="button">同步已发布数据</button>
+        <a class="btn" id="runSearchLink" href="#" target="_blank" rel="noopener noreferrer" hidden>打开更新进度</a>
       </div>
     </header>
 
@@ -201,6 +209,13 @@
           <button class="btn" id="queueButton" type="button" aria-pressed="false">加入私有投递队列</button>
           <button class="btn" id="copyLink">复制岗位链接</button>
         </div>
+        <section class="advisor" aria-label="本地简历岗位类型建议">
+          <h3>简历适合投什么</h3>
+          <div class="muted">上传 PDF 后只在当前浏览器本地分析，不保存、不上传。</div>
+          <input id="resumeInput" type="file" accept=".pdf,.txt,.md,application/pdf,text/plain" aria-label="上传简历获取岗位类型建议">
+          <div class="advisor-status" id="resumeStatus">尚未选择简历</div>
+          <div class="advice-list" id="resumeAdvice" aria-live="polite"></div>
+        </section>
         <section class="queue-section" aria-label="私有投递队列">
           <div class="queue-heading"><h3>私有投递队列</h3><span class="badge" id="queueCount">0 条</span></div>
           <div class="muted">仅保存在当前浏览器，不上传个人资料。</div>
@@ -219,7 +234,8 @@
   <script src="./data/run-status.js"></script>
   <script>
     (() => {
-      let jobs = (window.APPLYPILOT_JOBS || []).filter(job => job.active !== false);
+      const isPublicRecord = job => job.active !== false && (job.recordKind === 'search' || job.verificationState === 'confirmed');
+      let jobs = (window.APPLYPILOT_JOBS || []).filter(isPublicRecord);
       let run = window.APPLYPILOT_RUN_STATUS || {};
       const labels = {
         all: '全部', base: '目标城市', overseas: '海外 / 远程',
@@ -235,6 +251,7 @@
       const activeFilters = document.getElementById('activeFilters');
       const search = document.getElementById('searchInput');
       const refreshButton = document.getElementById('refreshButton');
+      const syncButton = document.getElementById('syncButton');
       const runSearchLink = document.getElementById('runSearchLink');
       const queueButton = document.getElementById('queueButton');
       const queueList = document.getElementById('queueList');
@@ -242,6 +259,8 @@
       const exportQueue = document.getElementById('exportQueue');
       const queueStorageKey = 'dengdeng-private-application-queue-v1';
       let queue = [];
+      let workflowUrl = '';
+      let refreshPoll = null;
 
       try {
         const storedQueue = JSON.parse(localStorage.getItem(queueStorageKey) || '[]');
@@ -281,9 +300,11 @@
       }
 
       function updateMetrics() {
-        document.getElementById('totalMetric').textContent = `${jobs.length} 条有效信息`;
+        const confirmedJobs = jobs.filter(job => job.recordKind === 'job').length;
+        const searchEntries = jobs.filter(job => job.recordKind === 'search').length;
+        document.getElementById('totalMetric').textContent = `${confirmedJobs} 条已核验岗位`;
         document.getElementById('bonjourMetric').textContent = `${jobs.filter(j => j.status === 'bonjour').length} 条 Bonjour`;
-        document.getElementById('officialMetric').textContent = `${jobs.filter(j => j.status === 'watch').length} 个官网入口`;
+        document.getElementById('officialMetric').textContent = `${searchEntries} 个官网入口`;
         const refreshed = run.lastRun ? new Date(run.lastRun) : null;
         document.getElementById('refreshMetric').textContent = refreshed && !Number.isNaN(refreshed.getTime())
           ? `更新 ${refreshed.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}`
@@ -295,7 +316,8 @@
         if (!location.hostname.endsWith('.github.io')) return;
         const owner = location.hostname.slice(0, -'.github.io'.length);
         const repository = location.pathname.split('/').filter(Boolean)[0] || `${owner}.github.io`;
-        runSearchLink.href = `https://github.com/${encodeURIComponent(owner)}/${encodeURIComponent(repository)}/actions/workflows/daily-refresh.yml`;
+        workflowUrl = `https://github.com/${encodeURIComponent(owner)}/${encodeURIComponent(repository)}/actions/workflows/daily-refresh.yml`;
+        runSearchLink.href = workflowUrl;
         runSearchLink.hidden = false;
       }
 
@@ -309,27 +331,111 @@
         });
       }
 
-      async function refreshLatestData() {
+      async function syncLatestData({ quiet = false } = {}) {
         if (location.protocol === 'file:') {
           location.reload();
-          return;
+          return false;
         }
-        refreshButton.disabled = true;
-        refreshButton.textContent = '刷新中…';
+        if (!quiet) {
+          syncButton.disabled = true;
+          syncButton.textContent = '同步中…';
+        }
         try {
+          const previousRun = run.lastRun || '';
           const stamp = Date.now();
           await loadScript(`./data/jobs.js?v=${stamp}`);
           await loadScript(`./data/run-status.js?v=${stamp}`);
-          jobs = (window.APPLYPILOT_JOBS || []).filter(job => job.active !== false);
+          jobs = (window.APPLYPILOT_JOBS || []).filter(isPublicRecord);
           run = window.APPLYPILOT_RUN_STATUS || {};
           updateMetrics();
           render();
-          refreshButton.textContent = '已更新';
+          const changed = Boolean(run.lastRun && run.lastRun !== previousRun);
+          if (!quiet) syncButton.textContent = changed ? '发现新数据' : '已是最新发布版';
+          return changed;
         } catch (error) {
-          refreshButton.textContent = '刷新失败';
+          if (!quiet) syncButton.textContent = '同步失败';
           document.getElementById('runMessage').textContent = `刷新失败：${error.message}`;
+          return false;
         } finally {
-          setTimeout(() => { refreshButton.disabled = false; refreshButton.textContent = '刷新最新数据'; }, 1500);
+          if (!quiet) setTimeout(() => { syncButton.disabled = false; syncButton.textContent = '同步已发布数据'; }, 1500);
+        }
+      }
+
+      function startLiveRefresh() {
+        if (!workflowUrl) {
+          document.getElementById('runMessage').textContent = '本地文件不能启动云端搜索；请使用 GitHub Pages 公开网址。';
+          return;
+        }
+        window.open(workflowUrl, '_blank', 'noopener,noreferrer');
+        refreshButton.disabled = true;
+        refreshButton.textContent = '等待 GitHub 更新…';
+        document.getElementById('runMessage').textContent = '已打开 GitHub 更新页：点击 Run workflow。看板将在后台每 15 秒检查一次新结果。';
+        const startedAt = Date.now();
+        clearInterval(refreshPoll);
+        refreshPoll = setInterval(async () => {
+          const changed = await syncLatestData({ quiet:true });
+          if (changed || Date.now() - startedAt > 5 * 60 * 1000) {
+            clearInterval(refreshPoll);
+            refreshPoll = null;
+            refreshButton.disabled = false;
+            refreshButton.textContent = changed ? '更新完成' : '立即搜索最新岗位';
+            if (changed) document.getElementById('runMessage').textContent = `${run.message || '实时岗位搜索已完成。'} · 数据已同步到看板。`;
+            setTimeout(() => { refreshButton.textContent = '立即搜索最新岗位'; }, 2200);
+          }
+        }, 15000);
+      }
+
+      const adviceProfiles = [
+        { label: '海外内容运营 / 社媒运营', words: ['内容运营', '内容创作', '社交媒体', '社媒', '小红书', '公众号', '海外', '英文', '英语', '文案', '编辑'] },
+        { label: '产品运营 / 用户运营', words: ['产品运营', '用户运营', '用户增长', '用户反馈', '留存', '活跃', '社群', '数据分析', '产品优化'] },
+        { label: '市场营销 / 品牌增长', words: ['市场营销', '品牌', '营销', '增长', '活动策划', '推广', '传播', '投放', 'campaign'] },
+        { label: '销售 / BD / GTM', words: ['销售', '商务拓展', '业务拓展', 'bd', 'gtm', '客户开发', '合作拓展', '转化率', '谈判'] },
+        { label: '客户成功 / 大客户运营', words: ['客户成功', '大客户', '客户关系', '客户服务', '需求分析', '续约', '交付', '解决方案'] },
+        { label: '商业运营 / 项目运营', words: ['商业运营', '项目运营', '项目管理', '跨部门', '流程优化', '策略', '商业分析', '资源协调'] },
+        { label: '国企宣传 / 国际业务运营', words: ['国企', '央企', '宣传', '国际业务', '国际传播', '英语', '英文', '海外市场'] },
+        { label: '零售 / 电商运营', words: ['零售', '电商', '店铺运营', '商品运营', '平台运营', '供应链', 'gmv', '转化'] }
+      ];
+
+      async function extractResumeText(file) {
+        if (!file) return '';
+        if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
+          const pdfjs = await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs');
+          pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs';
+          const pdf = await pdfjs.getDocument({ data: await file.arrayBuffer() }).promise;
+          const pages = [];
+          for (let pageNumber = 1; pageNumber <= Math.min(pdf.numPages, 12); pageNumber += 1) {
+            const page = await pdf.getPage(pageNumber);
+            const content = await page.getTextContent();
+            pages.push(content.items.map(item => item.str || '').join(' '));
+          }
+          return pages.join('\n');
+        }
+        return file.text();
+      }
+
+      async function analyseResume(file) {
+        const status = document.getElementById('resumeStatus');
+        const output = document.getElementById('resumeAdvice');
+        output.innerHTML = '';
+        if (!file) {
+          status.textContent = '尚未选择简历';
+          return;
+        }
+        status.textContent = `正在本地分析 ${file.name}…`;
+        try {
+          const text = (await extractResumeText(file)).toLowerCase().replace(/\s+/g, ' ');
+          if (text.trim().length < 40) throw new Error('没有读取到足够的可复制文字');
+          const ranked = adviceProfiles.map(profile => {
+            const hits = profile.words.filter(word => text.includes(word.toLowerCase()));
+            return { ...profile, hits, score: hits.length };
+          }).sort((a, b) => b.score - a.score || a.label.localeCompare(b.label, 'zh-CN'));
+          const selected = ranked.filter(item => item.score > 0).slice(0, 5);
+          const fallback = adviceProfiles.slice(0, 4).map(item => ({ ...item, hits: [] }));
+          const advice = selected.length ? selected : fallback;
+          output.innerHTML = advice.map((item, index) => `<div class="advice-item"><strong>${index + 1}. ${escapeHtml(item.label)}</strong>${item.hits.length ? `<span>简历线索：${escapeHtml(item.hits.slice(0, 4).join('、'))}</span>` : ''}</div>`).join('');
+          status.textContent = `已在本地分析完成，列出 ${advice.length} 个适合方向；文件和文字均未上传。`;
+        } catch (error) {
+          status.textContent = `无法分析：${error.message}。请尝试可复制文字的 PDF、TXT 或 MD 文件。`;
         }
       }
 
@@ -357,7 +463,9 @@
         document.getElementById('detailNext').textContent = job.next || '打开入口并核验岗位要求。';
         document.getElementById('detailLinkType').textContent = job.linkType || '公开招聘入口';
         const checked = job.lastChecked ? new Date(job.lastChecked).toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' }) : '未记录';
-        document.getElementById('detailLinkState').textContent = `${job.linkState || 'unknown'} · 检测 ${checked}`;
+        document.getElementById('detailLinkState').textContent = job.recordKind === 'search'
+          ? `仅核验为官网搜索入口，不代表存在某个具体岗位 · 检测 ${checked}`
+          : `职位详情已核验 · ${job.verificationEvidence || job.linkState || '官网仍可访问'} · 检测 ${checked}`;
         const link = document.getElementById('applyLink');
         link.href = job.sourceUrl;
         link.textContent = job.applyLabel || '打开招聘入口';
@@ -377,7 +485,7 @@
               <span class="badge">${escapeHtml(job.statusLabel)}</span>
             </div>
             <div>${escapeHtml(job.title)}</div>
-            <div class="tags"><span class="tag">${escapeHtml(job.family)}</span><span class="tag">${escapeHtml(labels[job.ownership] || job.ownership)}</span><span class="tag">${job.discovered ? '自动发现' : '已收录'}</span></div>
+            <div class="tags"><span class="tag">${escapeHtml(job.family)}</span><span class="tag">${escapeHtml(labels[job.ownership] || job.ownership)}</span><span class="tag">${job.recordKind === 'search' ? '仅官网搜索入口' : '职位详情已核验'}</span></div>
             <div class="job-foot"><span>优先级 ${escapeHtml(job.priority)}</span><div class="actions"><button class="btn" data-detail="${escapeHtml(job.id)}">详情</button><a class="btn" href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener noreferrer">打开</a></div></div>
           </article>`).join('') : '<div class="empty">没有符合当前筛选的岗位</div>';
         grid.querySelectorAll('.job').forEach(card => card.addEventListener('click', () => selectJob(card.dataset.id)));
@@ -456,7 +564,9 @@
         exportQueue.textContent = '队列已导出';
         setTimeout(() => { exportQueue.textContent = '导出给私有投递助手'; }, 1800);
       });
-      refreshButton.addEventListener('click', refreshLatestData);
+      document.getElementById('resumeInput').addEventListener('change', event => analyseResume(event.target.files && event.target.files[0]));
+      refreshButton.addEventListener('click', startLiveRefresh);
+      syncButton.addEventListener('click', () => syncLatestData());
       configureWorkflowLink();
       updateMetrics();
       renderQueue();
