@@ -12,7 +12,40 @@
   "requestTimeoutMs": 15000,
   "maxConcurrentRequests": 4,
   "maxDiscoveredPerSource": 12,
+  "maxAutoDetectedBoards": 80,
+  "maxVerifiedAgeHours": 48,
   "retireAfterFailures": 3,
   "bonjourListUrl": "https://bonjour.bio/jobs-mapping/jobs",
-  "atsBoards": []
+  "atsBoards": [
+    {
+      "type": "workday",
+      "token": "nike:nke",
+      "tenant": "nike",
+      "site": "nke",
+      "apiBase": "https://nike.wd1.myworkdayjobs.com",
+      "publicBase": "https://nike.wd1.myworkdayjobs.com/zh-CN/nke",
+      "company": "Nike",
+      "ownership": "foreign"
+    },
+    {
+      "type": "workday",
+      "token": "3m:Search",
+      "tenant": "3m",
+      "site": "Search",
+      "apiBase": "https://3m.wd1.myworkdayjobs.com",
+      "publicBase": "https://3m.wd1.myworkdayjobs.com/Search",
+      "company": "3M",
+      "ownership": "foreign"
+    },
+    {
+      "type": "workday",
+      "token": "nxp:careers",
+      "tenant": "nxp",
+      "site": "careers",
+      "apiBase": "https://nxp.wd3.myworkdayjobs.com",
+      "publicBase": "https://nxp.wd3.myworkdayjobs.com/careers",
+      "company": "NXP 恩智浦",
+      "ownership": "foreign"
+    }
+  ]
 }
