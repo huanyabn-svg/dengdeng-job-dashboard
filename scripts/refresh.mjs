@@ -126,6 +126,7 @@ function candidateFromFields({ title, company, location, url, description = '', 
     ownership: sourceJob?.ownership || (sourceKind === 'bonjour' ? 'startup' : 'private'),
     priority: entryLevel || zone === 'base' ? '高' : '中',
     sourceKind,
+    recordKind: 'job',
     sourceUrl,
     applyLabel: sourceKind === 'bonjour' ? '打开 Bonjour 职位' : '打开官网职位',
     linkType: sourceKind === 'bonjour' ? 'Bonjour 公开职位详情' : '企业官网或其官方 ATS 职位详情',
@@ -135,10 +136,88 @@ function candidateFromFields({ title, company, location, url, description = '', 
     discovered: true,
     firstSeen: nowIso.slice(0, 10),
     lastChecked: nowIso,
-    linkState: 'discovered',
+    linkState: 'pending-verification',
+    verificationState: 'pending',
+    verificationEvidence: '',
+    verifiedAt: null,
     httpStatus: null,
     failureCount: 0
   };
+}
+
+function isSearchEntry(job) {
+  return job.recordKind === 'search' || (job.sourceKind === 'official' && !job.discovered && job.status === 'watch');
+}
+
+function normalizedTitle(value) {
+  return plainText(value).toLowerCase().replace(/招聘雷达|官方岗位搜索|岗位搜索|职位搜索/g, '').replace(/[^\p{L}\p{N}]+/gu, '');
+}
+
+function titleMatches(expected, actual) {
+  const left = normalizedTitle(expected);
+  const right = normalizedTitle(actual);
+  if (!left || !right) return false;
+  if (left.includes(right) || right.includes(left)) return true;
+  const tokens = plainText(expected).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(token => token.length >= 2);
+  return tokens.length > 0 && tokens.filter(token => plainText(actual).toLowerCase().includes(token)).length / tokens.length >= 0.7;
+}
+
+function jobPostingTitles(html) {
+  const titles = [];
+  const scripts = html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi);
+  for (const match of scripts) {
+    try {
+      const parsed = JSON.parse(decodeEntities(match[1]).trim());
+      walkJson(parsed, item => {
+        const types = Array.isArray(item['@type']) ? item['@type'] : [item['@type']];
+        if (types.some(type => String(type).toLowerCase() === 'jobposting') && (item.title || item.name)) titles.push(plainText(item.title || item.name));
+      });
+    } catch {}
+  }
+  return titles;
+}
+
+function hasClosedJobSignal(html) {
+  const text = plainText(html).toLowerCase();
+  return /job (is )?no longer available|position (has been )?filled|no longer accepting applications|job not found|posting (has )?expired|职位不存在|岗位不存在|职位已下线|岗位已下线|招聘已结束|停止招聘|已停止接受申请/.test(text);
+}
+
+function verifyJobPage(page, job) {
+  if (!page.html || hasClosedJobSignal(page.html)) return { confirmed:false, evidence:'职位页显示已关闭或不存在' };
+  const structuredTitle = jobPostingTitles(page.html).find(title => titleMatches(job.title, title));
+  if (structuredTitle) return { confirmed:true, evidence:`结构化职位详情：${structuredTitle}` };
+  const pageText = plainText(page.html).slice(0, 300000);
+  const finalRoute = (() => { try { return new URL(page.finalUrl).pathname.toLowerCase(); } catch { return ''; } })();
+  const jobLikeRoute = /\/(job|jobs|position|positions|vacancy|vacancies|posting|postings|requisition)(\/|$)/.test(finalRoute)
+    || /job|position|requisition/.test((() => { try { return new URL(page.finalUrl).search; } catch { return ''; } })());
+  if (jobLikeRoute && titleMatches(job.title, pageText)) return { confirmed:true, evidence:'职位详情页标题与看板一致' };
+  return { confirmed:false, evidence:'页面可打开，但没有找到与看板标题一致的职位详情' };
+}
+
+function detectedAtsBoards(html) {
+  const found = new Map();
+  const patterns = [
+    { type:'greenhouse', regex:/https?:\/\/(?:boards|job-boards)\.greenhouse\.io\/([a-z0-9_-]+)/gi },
+    { type:'lever', regex:/https?:\/\/jobs\.lever\.co\/([a-z0-9_-]+)/gi },
+    { type:'ashby', regex:/https?:\/\/jobs\.ashbyhq\.com\/([a-z0-9_-]+)/gi }
+  ];
+  for (const pattern of patterns) {
+    for (const match of html.matchAll(pattern.regex)) {
+      const token = match[1];
+      if (token) found.set(`${pattern.type}:${token}`, { type:pattern.type, token });
+    }
+  }
+  for (const match of String(html || '').matchAll(/https?:\/\/([a-z0-9-]+)\.(wd\d+)\.myworkdayjobs\.com\/((?:[a-z]{2}-[A-Z]{2}\/)?)([a-z0-9_-]+)/g)) {
+    const [, tenant, cluster, localePrefix = '', site] = match;
+    if (!tenant || !cluster || !site || site.toLowerCase() === 'wday') continue;
+    const origin = `https://${tenant}.${cluster}.myworkdayjobs.com`;
+    found.set(`workday:${tenant}:${site}`, {
+      type:'workday', token:`${tenant}:${site}`, tenant, site,
+      apiBase:origin,
+      publicBase:`${origin}/${localePrefix}${site}`
+    });
+  }
+  return [...found.values()];
 }
 
 async function fetchWithTimeout(url, options = {}) {
@@ -318,30 +397,50 @@ function bonjourCandidates(html) {
 }
 
 async function processExisting(job) {
-  const updated = { ...job, lastChecked: nowIso };
+  const searchEntry = isSearchEntry(job);
+  const updated = {
+    ...job,
+    recordKind: searchEntry ? 'search' : 'job',
+    title: searchEntry ? `${job.company} 官方岗位搜索` : job.title,
+    statusLabel: searchEntry ? '官网岗位搜索' : job.statusLabel,
+    lastChecked: nowIso
+  };
   const discoveries = [];
+  const boards = [];
   try {
     const page = await fetchPage(job.sourceUrl);
     if (page.blockedByRobots) {
       updated.linkState = 'robots-blocked';
       updated.httpStatus = null;
-      updated.active = true;
-      return { updated, discoveries };
+      updated.active = searchEntry;
+      return { updated, discoveries, boards };
     }
     updated.httpStatus = page.status;
     if (page.status >= 200 && page.status < 400) {
-      updated.linkState = 'verified';
       updated.failureCount = 0;
-      updated.active = true;
-      if (job.sourceKind === 'official' && !job.discovered && page.html) {
+      if (searchEntry) {
+        updated.linkState = 'search-entry-verified';
+        updated.verificationState = 'search-entry';
+        updated.verificationEvidence = '仅确认企业招聘入口可访问，不代表存在某个具体岗位';
+        updated.active = true;
+      } else {
+        const verification = verifyJobPage(page, job);
+        updated.verificationState = verification.confirmed ? 'confirmed' : 'rejected';
+        updated.verificationEvidence = verification.evidence;
+        updated.verifiedAt = verification.confirmed ? nowIso : (job.verifiedAt || null);
+        updated.linkState = verification.confirmed ? 'job-confirmed' : 'job-not-confirmed';
+        updated.active = verification.confirmed;
+      }
+      if (searchEntry && job.sourceKind === 'official' && page.html) {
         const candidates = [...jsonLdCandidates(page.html, job), ...anchorCandidates(page.html, job)];
         const unique = new Map(candidates.map(candidate => [canonicalUrl(candidate.sourceUrl), candidate]));
         discoveries.push(...[...unique.values()].slice(0, rules.maxDiscoveredPerSource));
+        boards.push(...detectedAtsBoards(`${job.sourceUrl}\n${page.finalUrl}\n${page.html}`).map(board => ({ ...board, company:job.company, ownership:job.ownership })));
       }
     } else if ([401, 403, 429].includes(page.status)) {
       updated.linkState = 'protected';
       updated.failureCount = 0;
-      updated.active = true;
+      updated.active = searchEntry || (updated.verifiedAt && (now - new Date(updated.verifiedAt)) / 36e5 <= rules.maxVerifiedAgeHours);
     } else if ([404, 410].includes(page.status)) {
       updated.linkState = 'closed';
       updated.failureCount = (job.failureCount || 0) + 1;
@@ -349,31 +448,73 @@ async function processExisting(job) {
     } else {
       updated.linkState = 'temporary-error';
       updated.failureCount = (job.failureCount || 0) + 1;
-      updated.active = updated.failureCount < rules.retireAfterFailures;
+      updated.active = searchEntry
+        ? updated.failureCount < rules.retireAfterFailures
+        : Boolean(updated.verifiedAt && (now - new Date(updated.verifiedAt)) / 36e5 <= rules.maxVerifiedAgeHours);
     }
   } catch (error) {
     updated.httpStatus = null;
     updated.linkState = error?.name === 'AbortError' ? 'timeout' : 'network-error';
     updated.failureCount = (job.failureCount || 0) + 1;
-    updated.active = updated.failureCount < rules.retireAfterFailures;
+    updated.active = searchEntry
+      ? updated.failureCount < rules.retireAfterFailures
+      : Boolean(updated.verifiedAt && (now - new Date(updated.verifiedAt)) / 36e5 <= rules.maxVerifiedAgeHours);
   }
-  return { updated, discoveries };
+  return { updated, discoveries, boards };
 }
 
 async function discoverBonjour() {
   try {
     const page = await fetchPage(rules.bonjourListUrl);
-    if (!page.html) return [];
+    if (!page.html) return null;
     return bonjourCandidates(page.html);
   } catch {
-    return [];
+    return null;
   }
 }
 
-async function discoverAtsBoards() {
+async function discoverAtsBoards(extraBoards = []) {
   const found = [];
-  for (const board of rules.atsBoards.filter(board => board.enabled !== false)) {
+  const boards = new Map();
+  for (const board of [...rules.atsBoards.filter(board => board.enabled !== false), ...extraBoards]) {
+    if (!board?.type || !board?.token) continue;
+    boards.set(`${board.type}:${board.token}`, board);
+  }
+  for (const board of [...boards.values()].slice(0, rules.maxAutoDetectedBoards)) {
     try {
+      if (board.type === 'workday') {
+        const endpoint = `${board.apiBase}/wday/cxs/${encodeURIComponent(board.tenant)}/${encodeURIComponent(board.site)}/jobs`;
+        const rowsByPath = new Map();
+        for (const searchText of ['marketing', 'operations', 'sales', 'business development', 'graduate', 'intern']) {
+          const response = await fetchWithTimeout(endpoint, {
+            method:'POST',
+            headers:{ accept:'application/json', 'content-type':'application/json' },
+            body:JSON.stringify({ appliedFacets:{}, limit:100, offset:0, searchText })
+          });
+          if (!response.ok) continue;
+          const payload = await response.json();
+          for (const row of payload.jobPostings || []) if (row.externalPath) rowsByPath.set(row.externalPath, row);
+        }
+        for (const row of rowsByPath.values()) {
+          const sourceJob = { company:board.company, sourceUrl:board.publicBase, sourceKind:'official', ownership:board.ownership || 'foreign' };
+          const candidate = candidateFromFields({
+            title:row.title,
+            company:board.company,
+            location:row.locationsText,
+            url:`${board.publicBase}${row.externalPath}`,
+            description:[row.timeType, row.postedOn, ...(row.bulletFields || [])].join(' '),
+            sourceJob
+          });
+          if (candidate) {
+            candidate.verificationState = 'confirmed';
+            candidate.verificationEvidence = '官方 Workday 职位接口当前返回该岗位';
+            candidate.verifiedAt = nowIso;
+            candidate.linkState = 'job-confirmed';
+            found.push(candidate);
+          }
+        }
+        continue;
+      }
       let endpoint = '';
       if (board.type === 'greenhouse') endpoint = `https://boards-api.greenhouse.io/v1/boards/${board.token}/jobs?content=true`;
       if (board.type === 'lever') endpoint = `https://api.lever.co/v0/postings/${board.token}?mode=json`;
@@ -394,7 +535,13 @@ async function discoverAtsBoards() {
           description: row.content || row.descriptionPlain || row.descriptionHtml,
           sourceJob
         });
-        if (candidate) found.push(candidate);
+        if (candidate) {
+          candidate.verificationState = 'confirmed';
+          candidate.verificationEvidence = `官方 ${board.type} 职位接口当前返回该岗位`;
+          candidate.verifiedAt = nowIso;
+          candidate.linkState = 'job-confirmed';
+          found.push(candidate);
+        }
       }
     } catch {
       continue;
@@ -419,14 +566,52 @@ async function mapConcurrent(items, limit, mapper) {
 const processed = await mapConcurrent(currentJobs, rules.maxConcurrentRequests, processExisting);
 const checkedJobs = processed.map(result => result.updated);
 const discovered = processed.flatMap(result => result.discoveries);
-discovered.push(...await discoverBonjour(), ...await discoverAtsBoards());
+const autoDetectedBoards = processed.flatMap(result => result.boards || []);
+const bonjourResult = await discoverBonjour();
+const bonjourNow = bonjourResult || [];
+for (const job of bonjourNow) {
+  job.verificationState = 'confirmed';
+  job.verificationEvidence = 'Bonjour 当前公开职位列表仍包含该岗位';
+  job.verifiedAt = nowIso;
+  job.linkState = 'job-confirmed';
+}
+discovered.push(...bonjourNow, ...await discoverAtsBoards(autoDetectedBoards));
+
+const verifiedDiscoveries = await mapConcurrent(discovered, rules.maxConcurrentRequests, async candidate => {
+  if (candidate.verificationState === 'confirmed') return candidate;
+  try {
+    const page = await fetchPage(candidate.sourceUrl);
+    if (!(page.status >= 200 && page.status < 400)) return { ...candidate, active:false, verificationState:'rejected', verificationEvidence:`职位详情返回 ${page.status || '错误'}` };
+    const verification = verifyJobPage(page, candidate);
+    return {
+      ...candidate,
+      active:verification.confirmed,
+      verificationState:verification.confirmed ? 'confirmed' : 'rejected',
+      verificationEvidence:verification.evidence,
+      verifiedAt:verification.confirmed ? nowIso : null,
+      linkState:verification.confirmed ? 'job-confirmed' : 'job-not-confirmed',
+      httpStatus:page.status
+    };
+  } catch {
+    return { ...candidate, active:false, verificationState:'rejected', verificationEvidence:'职位详情无法完成核验' };
+  }
+});
 
 const merged = new Map();
 for (const job of checkedJobs) merged.set(canonicalUrl(job.sourceUrl), job);
-for (const job of discovered) {
+for (const job of verifiedDiscoveries) {
   const key = canonicalUrl(job.sourceUrl);
-  if (!key || merged.has(key)) continue;
+  if (!key) continue;
   merged.set(key, job);
+}
+
+if (bonjourResult) {
+  const currentBonjourUrls = new Set(bonjourNow.map(job => canonicalUrl(job.sourceUrl)));
+  for (const [key, job] of merged) {
+    if (job.sourceKind === 'bonjour' && !currentBonjourUrls.has(key)) {
+      merged.set(key, { ...job, active:false, verificationState:'rejected', linkState:'not-in-current-bonjour-list', verificationEvidence:'Bonjour 当前列表已不再显示该岗位' });
+    }
+  }
 }
 
 const jobs = [...merged.values()].sort((a, b) => {
@@ -436,7 +621,7 @@ const jobs = [...merged.values()].sort((a, b) => {
   return `${a.company}${a.title}`.localeCompare(`${b.company}${b.title}`, 'zh-CN');
 });
 
-const active = jobs.filter(job => job.active);
+const active = jobs.filter(job => job.active && (job.recordKind === 'search' || job.verificationState === 'confirmed'));
 const closedThisRun = checkedJobs.filter(job => job.active === false && currentJobs.find(old => old.id === job.id)?.active !== false).length;
 const newlyAdded = jobs.filter(job => !currentJobs.some(old => canonicalUrl(old.sourceUrl) === canonicalUrl(job.sourceUrl))).length;
 const runStatus = {
@@ -448,7 +633,10 @@ const runStatus = {
   removed: closedThisRun,
   protected: active.filter(job => ['protected', 'robots-blocked'].includes(job.linkState)).length,
   errors: active.filter(job => ['timeout', 'network-error', 'temporary-error'].includes(job.linkState)).length,
-  message: `本次检测 ${currentJobs.length} 条，新增 ${newlyAdded} 条岗位，关闭 ${closedThisRun} 条失效入口。`
+  sourceEntries:active.filter(job => job.recordKind === 'search').length,
+  confirmedJobs:active.filter(job => job.recordKind === 'job').length,
+  detectedBoards:autoDetectedBoards.length,
+  message: `本次核验 ${currentJobs.length} 条记录，确认 ${active.filter(job => job.recordKind === 'job').length} 个真实在招岗位，保留 ${active.filter(job => job.recordKind === 'search').length} 个官网搜索入口。`
 };
 
 async function writeAtomic(path, content) {

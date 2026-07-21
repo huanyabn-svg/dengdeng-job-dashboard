@@ -18,6 +18,9 @@ for (const job of jobs) {
   if (!['bonjour', 'watch'].includes(job.status)) errors.push(`invalid status: ${job.id}`);
   if (job.status === 'bonjour' && !/上海|远程|remote/i.test(job.location)) errors.push(`bonjour location rule failed: ${job.id}`);
   if (/linkedin\.com/i.test(job.sourceUrl)) errors.push(`LinkedIn is not allowed: ${job.id}`);
+  if (job.active && job.recordKind === 'job' && job.verificationState !== 'confirmed') errors.push(`unverified job is public: ${job.id}`);
+  if (job.recordKind === 'search' && !/官方岗位搜索$/.test(job.title)) errors.push(`search entry looks like a job: ${job.id}`);
+  if (job.recordKind === 'job' && job.active && !job.verifiedAt) errors.push(`confirmed job lacks verifiedAt: ${job.id}`);
 }
 
 const publicText = `${index}\n${dataSource}`;
