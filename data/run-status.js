@@ -1,10 +1,10 @@
 window.APPLYPILOT_RUN_STATUS = {
-  "lastRun": "2026-07-23T04:44:25.129Z",
+  "lastRun": "2026-07-24T04:41:19.420Z",
   "mode": "automatic",
   "checked": 149,
   "active": 143,
   "newJobs": 0,
-  "removed": 2,
+  "removed": 0,
   "protected": 7,
   "errors": 8,
   "sourceEntries": 130,
