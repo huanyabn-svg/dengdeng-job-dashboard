@@ -1,14 +1,14 @@
 window.APPLYPILOT_RUN_STATUS = {
-  "lastRun": "2026-07-25T04:37:05.887Z",
+  "lastRun": "2026-07-26T04:50:11.171Z",
   "mode": "automatic",
-  "checked": 149,
+  "checked": 150,
   "active": 144,
-  "newJobs": 1,
+  "newJobs": 0,
   "removed": 1,
-  "protected": 6,
-  "errors": 4,
-  "sourceEntries": 130,
-  "confirmedJobs": 14,
+  "protected": 9,
+  "errors": 3,
+  "sourceEntries": 131,
+  "confirmedJobs": 13,
   "detectedBoards": 8,
-  "message": "本次核验 149 条记录，确认 14 个真实在招岗位，保留 130 个官网搜索入口。"
+  "message": "本次核验 150 条记录，确认 13 个真实在招岗位，保留 131 个官网搜索入口。"
 };
